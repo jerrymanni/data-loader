@@ -2,3 +2,4 @@ src/data/landing/*
 src/data/archive/*
 src/logs/*
 **/__pycache__/*
+.env
