@@ -1,0 +1,229 @@
+INFO:common.logger:Reading file...
+INFO:common.logger:Reading file...
+INFO:common.logger:No files found.
+INFO:common.logger:Reading file...
+INFO:common.logger:No files found.
+INFO:common.logger:Reading file...
+INFO:common.logger:No files found.
+2025-07-13 22:58:12,679 - common.logger - INFO - Reading file...
+2025-07-13 22:58:12,679 - common.logger - INFO - No files found.
+2025-07-13 22:58:36,633 - INFO - Reading file...
+2025-07-13 22:58:36,633 - INFO - No files found.
+2025-07-13 23:00:09,732 - INFO - Reading file...
+2025-07-13 23:00:09,732 - ERROR - No files found.
+2025-07-13 23:07:52,711 - INFO - Reading file...
+2025-07-13 23:07:52,711 - ERROR - No files found.
+2025-07-13 23:08:22,401 - INFO - Reading file...
+2025-07-13 23:08:22,406 - INFO - Row count 3
+2025-07-13 23:08:38,767 - INFO - Reading file...
+2025-07-13 23:08:38,768 - INFO - Row count 3
+2025-07-13 23:10:00,773 - INFO - Reading file...
+2025-07-13 23:10:00,774 - INFO - Row count 3
+2025-07-13 23:10:42,006 - INFO - Reading file...
+2025-07-13 23:10:42,007 - INFO - Row count 3
+2025-07-13 23:12:31,550 - INFO - Reading file...
+2025-07-13 23:12:31,551 - INFO - Row count 3
+2025-07-14 23:12:52,504 - INFO - Reading file...
+2025-07-14 23:12:52,505 - INFO - Row count 3
+2025-07-14 23:14:13,279 - INFO - Reading file...
+2025-07-14 23:14:13,280 - INFO - Row count 3
+2025-07-15 12:56:36,412 - INFO - Starting pipeline!
+2025-07-15 12:56:36,431 - INFO - Reading file...
+2025-07-15 12:56:36,432 - INFO - Row count 3
+2025-07-15 12:56:36,463 - INFO - Pipeline ended!
+2025-07-15 13:30:42,427 - INFO - Starting pipeline!
+2025-07-15 13:30:42,450 - INFO - Reading file...
+2025-07-15 13:30:42,451 - INFO - Row count 3
+2025-07-15 13:30:42,477 - INFO - Starting upsert...
+2025-07-15 13:30:42,479 - INFO - Upsert finished
+2025-07-15 13:30:42,479 - INFO - Pipeline ended!
+2025-07-15 15:50:40,802 - INFO - Starting pipeline!
+2025-07-15 15:50:40,825 - INFO - Reading file...
+2025-07-15 15:50:40,826 - INFO - Row count 3
+2025-07-15 15:50:40,857 - INFO - Starting upsert...
+2025-07-15 15:50:40,861 - INFO - Upsert finished
+2025-07-15 15:50:40,861 - INFO - Generating timestap for file archiving.
+2025-07-15 15:50:40,861 - INFO - Pipeline ended!
+2025-07-15 15:51:56,207 - INFO - Starting pipeline!
+2025-07-15 15:51:56,231 - INFO - Reading file...
+2025-07-15 15:51:56,233 - INFO - Row count 3
+2025-07-15 15:51:56,258 - INFO - Starting upsert...
+2025-07-15 15:51:56,260 - INFO - Upsert finished
+2025-07-15 15:51:56,260 - INFO - Generating timestap for file archiving.
+2025-07-15 15:51:56,260 - INFO - Pipeline ended!
+2025-07-15 15:52:32,796 - INFO - Starting pipeline!
+2025-07-15 15:52:32,819 - INFO - Reading file...
+2025-07-15 15:52:32,820 - INFO - Row count 3
+2025-07-15 15:52:32,851 - INFO - Starting upsert...
+2025-07-15 15:52:32,854 - INFO - Upsert finished
+2025-07-15 15:52:32,854 - INFO - Generating timestap for file archiving.
+2025-07-15 15:52:32,854 - INFO - Pipeline ended!
+2025-07-15 21:14:29,992 - INFO - Starting pipeline!
+2025-07-15 21:14:30,017 - INFO - Reading file...
+2025-07-15 21:14:30,020 - INFO - Row count 3
+2025-07-15 21:14:30,048 - INFO - Starting inserting new rows...
+2025-07-15 21:14:30,064 - ERROR - Insert into dw.daily_sales failed with message: (psycopg2.errors.SyntaxError) syntax error at or near "."
+LINE 13:                     stg.hash_key,
+                                ^
+
+[SQL:     
+                with data as (
+                select
+                cols,
+                md5(concat_ws('|', key_cols)) as hash_key,
+                md5(concat_ws('|', data_cols)) as datahash
+                from stg.daily_sales stg
+                )
+                insert into dw.daily_sales 
+                (cols, hash_key, datahash)
+                select
+                    cols
+                    stg.hash_key,
+                    stg.datahash
+                from data stg
+                left join dw.daily_sales dw
+                    on dw.hash_key = stg.hash_key
+                    and dw.is_current = True
+                where dw.datahash <> stg.datahash 
+                ;
+                ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-15 21:14:30,064 - INFO - New rows inserted!
+2025-07-15 21:14:30,064 - INFO - Upsert finished
+2025-07-15 21:14:30,064 - INFO - Starting updating is_current.
+2025-07-15 21:14:30,065 - INFO - Update finished!
+2025-07-15 21:14:30,065 - INFO - Generating timestap for file archiving.
+2025-07-15 21:14:30,065 - INFO - File archived!
+2025-07-15 21:14:30,065 - INFO - Pipeline ended!
+2025-07-15 21:19:56,864 - INFO - Starting pipeline!
+2025-07-15 21:19:56,885 - INFO - Reading file...
+2025-07-15 21:19:56,886 - INFO - Row count 3
+2025-07-15 21:19:56,915 - INFO - Starting inserting new rows...
+2025-07-15 21:19:56,924 - ERROR - Insert into dw.daily_sales failed with message: (psycopg2.errors.UndefinedColumn) column "cols" does not exist
+LINE 4:                 cols,
+                        ^
+
+[SQL:     
+                with data as (
+                select
+                cols,
+                md5(concat_ws('|', key_cols)) as hash_key,
+                md5(concat_ws('|', data_cols)) as datahash
+                from stg.daily_sales stg
+                )
+                insert into dw.daily_sales 
+                (cols, hash_key, datahash)
+                select
+                    cols,
+                    stg.hash_key,
+                    stg.datahash
+                from data stg
+                left join dw.daily_sales dw
+                    on dw.hash_key = stg.hash_key
+                    and dw.is_current = True
+                where dw.datahash <> stg.datahash 
+                ;
+                ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-15 21:24:39,537 - INFO - Starting pipeline!
+2025-07-15 21:24:39,563 - INFO - Reading file...
+2025-07-15 21:24:39,565 - INFO - Row count 3
+2025-07-15 21:24:39,592 - INFO - Starting inserting new rows...
+2025-07-15 21:24:39,600 - ERROR - Insert into dw.daily_sales failed with message: (psycopg2.errors.UndefinedColumn) column "stg" of relation "daily_sales" does not exist
+LINE 10:                 (stg.date,stg.accounting_unit,stg.account,st...
+                          ^
+
+[SQL:     
+                with data as (
+                select
+                stg.date,stg.accounting_unit,stg.account,stg.balance,
+                md5(concat_ws('|', stg.date,stg.accounting_unit,stg.account)) as hash_key,
+                md5(concat_ws('|', stg.balance)) as datahash
+                from stg.daily_sales stg
+                )
+                insert into dw.daily_sales 
+                (stg.date,stg.accounting_unit,stg.account,stg.balance, hash_key, datahash)
+                select
+                    stg.date,stg.accounting_unit,stg.account,stg.balance,
+                    stg.hash_key,
+                    stg.datahash
+                from data stg
+                left join dw.daily_sales dw
+                    on dw.hash_key = stg.hash_key
+                    and dw.is_current = True
+                where dw.datahash <> stg.datahash 
+                ;
+                ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-15 21:27:14,681 - INFO - Starting pipeline!
+2025-07-15 21:27:14,703 - INFO - Reading file...
+2025-07-15 21:27:14,704 - INFO - Row count 3
+2025-07-15 21:27:14,734 - INFO - Starting inserting new rows...
+2025-07-15 21:27:14,745 - INFO - New rows inserted!
+2025-07-15 21:27:14,745 - INFO - Upsert finished
+2025-07-15 21:27:14,745 - INFO - Starting updating is_current.
+2025-07-15 21:27:14,746 - INFO - Update finished!
+2025-07-15 21:27:14,746 - INFO - Generating timestap for file archiving.
+2025-07-15 21:27:14,746 - INFO - File archived!
+2025-07-15 21:27:14,746 - INFO - Pipeline ended!
+2025-07-15 21:30:05,908 - INFO - Starting pipeline!
+2025-07-15 21:30:05,928 - INFO - Reading file...
+2025-07-15 21:30:05,929 - INFO - Row count 3
+2025-07-15 21:30:05,958 - INFO - Starting inserting new rows...
+2025-07-15 21:30:05,968 - INFO - New rows inserted!
+2025-07-15 21:30:05,968 - INFO - Upsert finished
+2025-07-15 21:30:05,968 - INFO - Starting updating is_current.
+2025-07-15 21:30:05,969 - INFO - Update finished!
+2025-07-15 21:30:05,969 - INFO - Generating timestap for file archiving.
+2025-07-15 21:30:05,969 - INFO - File archived!
+2025-07-15 21:30:05,969 - INFO - Pipeline ended!
+2025-07-15 21:32:18,347 - INFO - Starting pipeline!
+2025-07-15 21:32:18,370 - INFO - Reading file...
+2025-07-15 21:32:18,371 - INFO - Row count 3
+2025-07-15 21:32:18,405 - INFO - Starting inserting new rows...
+2025-07-15 21:32:18,417 - INFO - New rows inserted!
+2025-07-15 21:32:18,417 - INFO - Upsert finished
+2025-07-15 21:32:18,417 - INFO - Starting updating is_current.
+2025-07-15 21:32:18,418 - INFO - Update finished!
+2025-07-15 21:32:18,418 - INFO - Generating timestap for file archiving.
+2025-07-15 21:32:18,418 - INFO - File archived!
+2025-07-15 21:32:18,418 - INFO - Pipeline ended!
+2025-07-15 22:48:20,210 - INFO - Starting pipeline!
+2025-07-15 22:48:20,260 - INFO - Reading file...
+2025-07-15 22:48:20,260 - ERROR - No files found.
+2025-07-15 22:48:35,450 - INFO - Starting pipeline!
+2025-07-15 22:48:35,499 - INFO - Reading file...
+2025-07-15 22:48:35,499 - ERROR - No files found.
+2025-07-15 22:48:52,034 - INFO - Starting pipeline!
+2025-07-15 22:48:52,076 - INFO - Reading file...
+2025-07-15 22:48:52,077 - INFO - Row count 3
+2025-07-15 22:48:52,085 - INFO - Starting inserting new rows...
+2025-07-15 22:48:52,097 - INFO - New rows inserted!
+2025-07-15 22:48:52,097 - INFO - Upsert finished
+2025-07-15 22:48:52,097 - INFO - Starting updating is_current.
+2025-07-15 22:48:52,098 - INFO - Update finished!
+2025-07-15 22:48:52,098 - INFO - Generating timestap for file archiving.
+2025-07-15 22:48:52,098 - INFO - File archived!
+2025-07-15 22:48:52,098 - INFO - Pipeline ended!
+2025-07-15 22:56:46,578 - INFO - Starting pipeline!
+2025-07-15 22:56:46,627 - INFO - Reading file...
+2025-07-15 22:56:46,628 - INFO - Row count 3
+2025-07-15 22:56:46,636 - INFO - Starting inserting new rows...
+2025-07-15 22:56:46,648 - INFO - New rows inserted!
+2025-07-15 22:56:46,648 - INFO - Upsert finished
+2025-07-15 22:56:46,648 - INFO - Starting updating is_current.
+2025-07-15 22:56:46,648 - INFO - Update finished!
+2025-07-15 22:56:46,648 - INFO - Generating timestap for file archiving.
+2025-07-15 22:56:46,648 - INFO - File archived!
+2025-07-15 22:56:46,648 - INFO - Pipeline ended!
+2025-07-15 22:57:24,989 - INFO - Starting pipeline!
+2025-07-15 22:57:25,036 - INFO - Reading file...
+2025-07-15 22:57:25,037 - INFO - Row count 3
+2025-07-15 22:57:25,045 - INFO - Starting inserting new rows...
+2025-07-15 22:57:25,057 - INFO - New rows inserted!
+2025-07-15 22:57:25,057 - INFO - Upsert finished
+2025-07-15 22:57:25,057 - INFO - Starting updating is_current.
+2025-07-15 22:57:25,058 - INFO - Update finished!
+2025-07-15 22:57:25,058 - INFO - Generating timestap for file archiving.
+2025-07-15 22:57:25,058 - INFO - File archived!
+2025-07-15 22:57:25,058 - INFO - Pipeline ended!

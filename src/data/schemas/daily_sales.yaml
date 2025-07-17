@@ -1,0 +1,24 @@
+
+columns:
+  date: 
+    datatype: date
+    type: key
+  accounting_unit:
+    datatype: str
+    type: key
+  account:
+    datatype: str
+    type: key
+  balance:
+    datatype: float
+    type: data
+
+key:
+  - date
+  - accounting_unit
+  - account
+
+data:
+  - balance
+
+  
