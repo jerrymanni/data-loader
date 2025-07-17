@@ -6,12 +6,17 @@ columns:
   accounting_unit:
     datatype: str
     type: key
+    tests:
+      length: 7
   account:
     datatype: str
     type: key
   balance:
     datatype: float
     type: data
+    tests:
+      min: -99999
+      max: 999999
 
 key:
   - date
